@@ -18,7 +18,6 @@ namespace PaymentContext.Domain.Entities
 
             AddNotifications(name, document, email);
         }
-
         public Name Name { get; private set; }
         public Document Document { get; private set; }
         public Email Email { get; private set; }
