@@ -16,6 +16,8 @@ namespace PaymentContext.Tests
             var email = new Email("teste@test.com");
             var student = new Student(name, document, email);
             student.addSubscription(subscription);
+
+
         }
     }
 
