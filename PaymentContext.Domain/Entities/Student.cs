@@ -25,22 +25,25 @@ namespace PaymentContext.Domain.Entities
         public Address Addres { get; private set; }
         public IReadOnlyList<Subscription> Subscriptions { get { return _subscriptions; } }
 
-        public void addSubscription(Subscription subscription)
+        public void AddSubscription(Subscription subscription)
         {
             var hasSubscriptionActive = false;
-            foreach (var sub in Subscriptions)
+            foreach (var sub in _subscriptions)
             {
                 if (sub.Active)
                     hasSubscriptionActive = true;
             }
 
-            // AddNotifications(new Contract()
-            //     .Requires()
-            //     .IsFalse(hasSubscriptionActive, "Student.Subscription", "Você já tem uma assinatura ativa")
-            // );
+            AddNotifications(new Contract()
+                .Requires()
+                .IsFalse(hasSubscriptionActive, "Student.Subscription", "Você já tem uma assinatura ativa")
+                .AreNotEquals(0, subscription.Payments.Count, "Student.Subscription.Payments", "Esta assinatura não possuí pagamentos")
+            );
 
-            if (hasSubscriptionActive)
-                AddNotification("Student.Subscription", "Você já tem uma assinatura ativa");
+            if (Valid)
+                _subscriptions.Add(subscription);
+            // if (hasSubscriptionActive)
+            //     AddNotification("Student.Subscription", "Você já tem uma assinatura ativa");
         }
     }
 
