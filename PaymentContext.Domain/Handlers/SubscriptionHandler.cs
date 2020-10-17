@@ -33,10 +33,10 @@ namespace PaymentContext.Domain.Handlers
             }
             //Verificar se Documento já está cadastrado
             if (_repository.DocumentExists(command.Document))
-                AddNotification("Document", "Este CPF já está em uso")
+                AddNotification("Document", "Este CPF já está em uso");
             //Verificar se email já está cadastrado
             if (_repository.DocumentExists(command.Email))
-                AddNotification("Document", "Este CPF já está em uso")
+                AddNotification("Document", "Este CPF já está em uso");
 
             //gERAR os VOs
             var name = new Name(command.FirstName, command.LastName);
@@ -63,6 +63,9 @@ namespace PaymentContext.Domain.Handlers
             student.AddSubscription(subscription);
             //Agrupar notificacoes
             AddNotifications(name, document, email, address, student, subscription, payment);
+            //Checar notificações
+            if (Invalid)
+                return new CommandResult(false, "Não foi possível realizar sua assinatura");
             //Salvar informações
             _repository.CreateSubscription(student);
             //Enviar E=Mail de boas vindas
@@ -76,10 +79,10 @@ namespace PaymentContext.Domain.Handlers
 
             //Verificar se Documento já está cadastrado
             if (_repository.DocumentExists(command.Document))
-                AddNotification("Document", "Este CPF já está em uso")
+                AddNotification("Document", "Este CPF já está em uso");
             //Verificar se email já está cadastrado
             if (_repository.DocumentExists(command.Email))
-                AddNotification("Document", "Este CPF já está em uso")
+                AddNotification("Document", "Este CPF já está em uso");
 
             //gERAR os VOs
             var name = new Name(command.FirstName, command.LastName);
